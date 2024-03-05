@@ -1,0 +1,92 @@
+stages:
+  - builddocs
+  - verify_bundle
+  - publish_to_redocly_dev
+  - mainline_pause
+  - publish_to_redocly
+  - pages
+
+builddocs:
+  stage: builddocs
+  image: python:3.12-rc-buster
+  tags:
+    - scaled
+  script:
+    - apt update --assume-yes
+    - pip3 install openapi-schema-validator==0.1.5
+    - pip3 install openapi-spec-validator==0.3.1
+    - pip3 install ruamel.yaml
+    - apt install curl build-essential --assume-yes
+    - curl -sL https://deb.nodesource.com/setup_16.x | bash -
+    - apt install -y nodejs
+    - npm install swagger-repo
+    - npm install redoc-cli
+    - npm install postinstall-js
+    - npm install speccy
+    - pip3 install jsonschema==3.0.2
+    - chmod 755 scripts/build.sh
+    - scripts/build.sh
+  artifacts:
+    paths:
+      - generated
+
+verify_bundle:
+  stage: verify_bundle
+  image: artifactory.pipeline.smartsheet.com/dockerhub/node:12.18.3
+  only:
+    - mainline
+  script:
+    - cd generated/spec
+    - cp index.redocly index.html
+    - REDOCLY_AUTHORIZATION=${REDOCLY_AUTHORIZATION} npx @redocly/openapi-cli@latest bundle
+
+publish_to_redocly_develop:
+  image: artifactory.pipeline.smartsheet.com/dockerhub/node:12.18.3
+  stage: publish_to_redocly_dev
+  only:
+    - mainline
+  script:
+    - cd generated/spec
+    - cp index.redocly index.html
+    - REDOCLY_AUTHORIZATION=${REDOCLY_AUTHORIZATION} npx @redocly/openapi-cli@latest push -u ./openapi.yaml @smartsheet/Develop@develop main
+
+mainline_pause:
+  tags:
+    - scaled
+  image: artifactory.pipeline.smartsheet.com/dockerhub/docker:stable
+  stage: mainline_pause
+  only:
+    - mainline
+  script:
+    - echo About to publish to production.
+  when: manual
+  except:
+    - merge_requests
+  allow_failure: false
+
+publish_to_redocly_production:
+  image: artifactory.pipeline.smartsheet.com/dockerhub/node:12.18.3
+  stage: publish_to_redocly
+  only:
+    - mainline
+  script:
+    - cd generated/spec
+    - cp index.redocly index.html
+    - REDOCLY_AUTHORIZATION=${REDOCLY_AUTHORIZATION} npx @redocly/openapi-cli@latest push -u ./openapi.yaml @smartsheet/Production@production main
+
+pages:
+  stage: pages
+  only:
+    - develop
+  script:
+    - rm -rf public
+    - mkdir public
+    - cp -a generated/spec/* public
+    - sed -i 's/\/images\//images\//g' public/openapi.yaml
+  artifacts:
+    paths:
+      - public
+
+cache:
+  paths:
+    - public

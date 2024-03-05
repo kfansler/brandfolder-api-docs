@@ -1,0 +1,10 @@
+#Markdown files are auto-generated.
+/markdown
+/bin/
+/.classpath
+/generated
+.DS_Store
+.idea
+**/merged.yaml
+**/redoc-static.html
+.env

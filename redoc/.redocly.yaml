@@ -1,0 +1,45 @@
+apiDefinitions:
+  smartsheet: ./openapi.yaml
+rules:
+  security-defined: off
+referenceDocs:
+  htmlTemplate: ./index.html
+  theme:
+    typography:
+      fontFamily: 'Roboto, sans-serif'
+      fontSize: 16px
+      fontWeightRegular: '400'
+      lineHeight: 19px
+      headings:
+        fontFamily: 'Roboto, sans-serif'
+        fontWeight: '800'
+        lineHeight: '1'
+      heading1:
+        fontSize: 26px
+        fontWeight: '600'
+        # Optional lineHeight here too.
+      heading2:
+        fontSize: 21px
+        fontWeight: '600'
+        # Optional lineHeight here too.
+      heading3:
+        fontSize: 18px
+        fontWeight: '600'
+        # Optional lineHeight here too.
+      links:
+        color: rgba(9, 112, 190, 1)
+    colors:
+      primary:
+        main: "#32329f"
+    logo:
+      maxWidth: 260px
+      maxHeight: 260px
+    menu:
+      width: 260px
+      backgroundColor: rgba(247, 247, 247, 1)
+  hideLoading: true
+  nativeScrollbars: true
+  pagination: section
+  sideNavStyle: "path-first"
+
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf8" />
+  <title>{{title}}</title>
+  <!-- needed for adaptive design -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: white;
+    }
+  </style>
+  {{{redocHead}}}
+  {{#unless disableGoogleFont}}<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">{{/unless}}
+  <script>!function(){window.semaphore=window.semaphore||[],window.ketch=function(){window.semaphore.push(arguments)};var e=new URLSearchParams(document.location.search),o=e.has("property")?e.get("property"):"web",n=document.createElement("script");n.type="text/javascript",n.src="https://global.ketchcdn.com/web/v2/config/smartsheet/".concat(o,"/boot.js"),n.defer=n.async=!0,document.getElementsByTagName("head")[0].appendChild(n)}();
+  </script>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-KW34LR');
+  </script>
+</head>
+
+<body>
+  {{{redocHTML}}}
+
+
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyDLX_XPVEdRvpw4cKh2MfEhYruCVI212aI",
+    authDomain: "smar-api-docs.firebaseapp.com",
+    databaseURL: "https://smar-api-docs.firebaseio.com",
+    projectId: "smar-api-docs",
+    storageBucket: "smar-api-docs.appspot.com",
+    messagingSenderId: "107800194820",
+    appId: "1:107800194820:web:bb535564474f6f8816aa51",
+    measurementId: "G-9RBN8STPYG"
+  };
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+  
+</body>
+
+</html>

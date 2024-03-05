@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+    openapi:
+        hostname: openapi
+        container_name: openapi
+        build: .
+        ports:
+          - "${REDOC_PORT:-8000}:5000"
